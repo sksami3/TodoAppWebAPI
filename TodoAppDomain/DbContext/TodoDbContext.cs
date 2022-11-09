@@ -7,7 +7,7 @@ using System.Net.Mail;
 using System.Threading.Tasks;
 using TodoAppDomain.Model;
 
-namespace CManager.Web.Context
+namespace TodoAppDomain.Context
 {
     public class TodoDbContext : DbContext
     {

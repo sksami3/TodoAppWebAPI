@@ -1,3 +1,5 @@
+using Microsoft.EntityFrameworkCore;
+using TodoAppDomain.Context;
 using TodoAppRepository.Repositories;
 using TodoAppService;
 
@@ -9,6 +11,9 @@ builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+//TodoDbContext
+var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
+builder.Services.AddDbContext<TodoDbContext>(x => x.UseSqlServer(connectionString));
 
 #region service 
 builder.Services.AddTransient<ITodoRepository, TodoRepository>();
