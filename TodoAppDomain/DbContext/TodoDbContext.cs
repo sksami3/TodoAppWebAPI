@@ -1,6 +1,7 @@
-﻿using System;
+﻿//using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore;
+using System;
 using System.Collections.Generic;
-using System.Data.Entity;
 using System.IO;
 using System.Linq;
 using System.Net.Mail;
@@ -11,11 +12,11 @@ namespace TodoAppDomain.Context
 {
     public class TodoDbContext : DbContext
     {
-        public TodoDbContext() : base()
+        public TodoDbContext(DbContextOptions<TodoDbContext> options) : base(options)
         {
 
         }
-        public DbSet<Todo> Todos { get; set; }
+        public  DbSet<Todo> Todos { get; set; }
         
     }
 }

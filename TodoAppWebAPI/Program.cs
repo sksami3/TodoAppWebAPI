@@ -1,7 +1,10 @@
-using Microsoft.EntityFrameworkCore;
+//using Microsoft.EntityFrameworkCore;
 using TodoAppDomain.Context;
 using TodoAppRepository.Repositories;
 using TodoAppService;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.EntityFrameworkCore;
+
 
 var builder = WebApplication.CreateBuilder(args);
 

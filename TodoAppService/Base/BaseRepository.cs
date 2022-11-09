@@ -1,41 +1,41 @@
-﻿using CManager.Web.Context;
-using System;
+﻿using System;
 using System.Collections.Generic;
-using System.Data.Entity;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
+using TodoAppDomain.Context;
 using TodoAppDomain.Model.Base;
 using TodoAppRepository.Repositories.Base;
+using TodoAppDomain.Context;
 
 namespace TodoAppService.Base
 {
     public class BaseRepository<T> : IBaseRepository<T> where T : BaseModel
     {
         private readonly TodoDbContext context;
-        private DbSet<T> entities;
+        //private DbSet<T> entities;
 
         public BaseRepository(TodoDbContext context)
         {
             this.context = context;
-            entities = context.Set<T>();
+            //entities = context.Set<T>();
         }
 
         public void Add(T entity)
         {
             entity.CreatedDate = DateTime.Now;
-            entities.Add(entity);
+            context.Add(entity);
         }
 
         public async Task AddAsync(T entity)
         {
             entity.CreatedDate = DateTime.Now;
-            entities.Add(entity);
+            context.Add(entity);
         }
 
         public async Task AddAsyncRange(List<T> entites)
         {
-            entities.AddRange(entities);
+            context.AddRange(entites);
         }
 
         public void AddRange(List<T> entities)
@@ -45,18 +45,19 @@ namespace TodoAppService.Base
 
         public IQueryable<T> All()
         {
-            return entities.Where(x => !x.IsDelete);
+            return context.Set<T>().Where(x => !x.IsDelete);
         }
 
         public IQueryable<T> All(params Expression<Func<T, object>>[] includeProperties)
         {
-            IQueryable<T> queryable = All();
-            foreach (Expression<Func<T, object>> includeProperty in includeProperties)
-            {
-                queryable = queryable.Include<T, object>(includeProperty);
-            }
+            //IQueryable<T> queryable = All();
+            //foreach (Expression<Func<T, object>> includeProperty in includeProperties)
+            //{
+            //    queryable = queryable.Include<T, object>(includeProperty);
+            //}
 
-            return queryable;
+            //return queryable;
+            throw new NotImplementedException();
         }
 
         public T Find(int id)
@@ -66,7 +67,7 @@ namespace TodoAppService.Base
 
         public async Task<T> FindAsync(int id)
         {
-            return await entities.FirstOrDefaultAsync(x => x.Id.Equals(id));
+            return context.Set<T>().FirstOrDefault(x => x.Id.Equals(id));
         }
 
         public void Update(T entity)
@@ -90,7 +91,7 @@ namespace TodoAppService.Base
                 throw new ArgumentNullException("entity");
             }
 
-            entities.Remove(entity);
+            context.Set<T>().Remove(entity);
         }
 
         public Task DeleteAsyncRange(List<T> entites)
@@ -105,7 +106,7 @@ namespace TodoAppService.Base
                 throw new ArgumentNullException("entity");
             }
 
-            entities.RemoveRange(entites);
+            context.Set<T>().RemoveRange(entites);
         }
 
         public void SaveChanges()
