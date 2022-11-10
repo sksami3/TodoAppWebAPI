@@ -7,6 +7,7 @@ using TodoAppDomain.Context;
 using TodoAppDomain.Model.Base;
 using TodoAppRepository.Repositories.Base;
 using TodoAppDomain.Context;
+//using Microsoft.EntityFrameworkCore;
 
 namespace TodoAppService.Base
 {
@@ -25,12 +26,14 @@ namespace TodoAppService.Base
         {
             entity.CreatedDate = DateTime.Now;
             context.Add(entity);
+            SaveChanges();
         }
 
         public async Task AddAsync(T entity)
         {
             entity.CreatedDate = DateTime.Now;
             context.Add(entity);
+            SaveChanges();
         }
 
         public async Task AddAsyncRange(List<T> entites)
@@ -92,6 +95,7 @@ namespace TodoAppService.Base
             }
 
             context.Set<T>().Remove(entity);
+            SaveChanges();
         }
 
         public Task DeleteAsyncRange(List<T> entites)
